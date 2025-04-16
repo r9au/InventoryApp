@@ -12,7 +12,7 @@ const Workspace = () => {
   const [bill, setbill] = useState(0)
   console.log(userId)
   if (!userId) {
-    console.log("userid-undefined")
+    // console.log("userid-undefined")
     return;
   }
   const [workspace, setworkspace] = useState(null)
@@ -36,7 +36,7 @@ const Workspace = () => {
   }
   useEffect(() => {
     fetchspace();
-  }, [userId])
+  }, [userId,bill])
   // useEffect(() => {
   //   if(userId){
   //     sendmail()

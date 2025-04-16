@@ -9,7 +9,6 @@ const Login = () => {
         setfrm({...frm,[e.target.name]:e.target.value})
     }
     const Auth=async()=>{
-        console.log(frm)
         // let res= await fetch(`http://localhost:3000/Auth`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(frm)})
         let res= await fetch(`${import.meta.env.VITE_API_URL}/Auth`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(frm)})
         if(res.ok){
