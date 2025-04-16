@@ -2,16 +2,13 @@ const exp = require('express');
 const mong = require('mongoose');
 const app = exp();
 const bodyParser = require("body-parser")
-const cors = require("cors")
+const cors = require('cors')
 const multer = require('multer')
 const path = require('path')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 require('dotenv').config()
-app.use(cors({
-    origin:'https://backend-side-gueke8asaqf9e6dk.southeastasia-01.azurewebsites.net',
-    optionsSuccessStatus:200
-}))
+app.use(cors())
 const port = process.env.PORT || 8000;
 app.use(exp.json())
 app.use(exp.urlencoded({ extended: true }))
