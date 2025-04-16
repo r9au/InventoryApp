@@ -16,7 +16,6 @@ app.use('/uploads', exp.static(path.join(__dirname, '/uploads')))
 app.use('/public', exp.static(path.join(__dirname, '/public')))
 const User = require("./models/User")
 const Workspace = require("./models/workspace");
-const { useParams } = require('react-router-dom');
 try{
     mong.connect(`${process.env.MongoUri}`);
     console.log("connected")
@@ -68,7 +67,7 @@ app.post('/Auth', async (req, res) => {
     const { Email, Passkey } = req.body
     const rec = await User.findOne({ Email: Email })
     if (rec && rec.Passkey === Passkey) {
-        const token = jwt.sign({ User_id: rec._id.toString(), mail: rec.Email }, "secret_key", { expiresIn: "1h" })
+        const token = jwt.sign({ User_id: rec._id.toString(), mail: rec.Email }, process.env.Secret_key, { expiresIn: "1h" })
         res.status(200).json({ Success: true, token: token, user_id: rec._id })
     }
     else {
