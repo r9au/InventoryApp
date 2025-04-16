@@ -1,0 +1,79 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    /* align-items: center; */
+}
+.ico{
+    object-fit: fill;
+}
+.snap{
+    display: none;
+}
+.file{
+    height: 20%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+.tabu{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.lbu{
+    width: 27%;
+    color: black;
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-weight: bold;
+    margin: 7px;
+    padding: 4px;
+}
+.infou{
+    width: 20%;
+    height: 3vw;
+    border: 2px solid black;
+    padding: 2px;
+    margin: 4px;
+    border-radius: 4px;
+}
+.maincon{
+    margin: 4px;
+    padding: 4px;
+    margin-left: 5%;
+}
+.subbtn{
+    background-color: black;
+    margin: 4px;
+    padding: 2px;
+    height: 4vw;
+    width: 9%;
+    color: white;
+    font-family: 'Poppins';
+    font-size: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+@media screen and (max-width:600px){
+    .lbu{
+    width: 87%;
+    font-size: 14px;
+    }
+    .infou{
+    width: 81%;
+    height: 14vw;
+    }
+    .subbtn{
+        margin: 14px;
+    padding: 2px;
+    height: 17vw;
+    width: 34%;
+    }
+}

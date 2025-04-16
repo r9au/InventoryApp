@@ -1,0 +1,141 @@
+.wrk{
+    /* padding: 4px; */
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+.tank{
+    padding: 4px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    width: 100%;
+    box-sizing: border-box;
+}
+.space{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 21vw;
+    width: 30%;
+    margin: 4px;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-shadow: 8px 9px 9px #FBF3E8;
+}
+.details{
+    margin: 2px;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width:90%;
+    height: 60%;
+}
+.capn{
+    width: 90%;
+    height: 40%;
+    /* border: 2px solid blue; */
+    margin: 3px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.Snap{
+    object-fit: contain;
+    width: 96px;
+    height: 96px;
+}
+.name{
+    margin: auto;
+    padding: 2px;
+    font-size: 100%;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+.stmp{
+    margin: auto;
+    padding: 2px;
+    font-size: 100%;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+.amt{
+    margin: 2px;
+    padding: 2px;
+    font-size: 100%;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+.exp{
+    margin: 2px;
+    padding: 2px;
+    font-size: 100%;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+.msg{
+    /* width: 50%; */
+    height: 50%;
+    padding: 3px;
+    margin: auto;
+    font-size: 10vw;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);;
+    background-clip: text;
+    color: transparent;
+    box-sizing: border-box;
+}
+.dstmp{
+ padding: 2px;
+ margin: 2px;
+ cursor: pointer;
+ border: none;
+ background-color: white;
+}
+@media screen and (max-width:600px){
+    .space{
+    height: 88vw;
+    width: 78%;
+    margin: 9px;
+    }
+    .tank{
+        padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    width: 100%;
+    box-sizing: border-box;
+    }
+    .space{
+        display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 95vw;
+    width: 83%;
+    margin: 4px;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-shadow: 8px 9px 9px #FBF3E8;
+    }
+
+}
+.bills{
+    width: 80%;
+    padding: 3px;
+    margin: auto;
+    font-size: 28px;
+    color: rgb(80, 245, 80);
+    font-family: 'Poppins';
+    text-align: center;
+    border: 2px solid #1f4eae;
+    border-radius: 4px;
+    margin-top: 2%;
+}
