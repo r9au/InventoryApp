@@ -1,6 +1,5 @@
 import { React, useEffect, useState,useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import Card from './Card'
 import Navbar from './Navbar'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import "./Workspace.css"
@@ -10,7 +9,6 @@ const Workspace = () => {
   const userId = id;
   const [expr, setexpr] = useState(0)
   const [bill, setbill] = useState(0)
-  console.log(userId)
   if (!userId) {
     // console.log("userid-undefined")
     return;
@@ -18,9 +16,14 @@ const Workspace = () => {
   const [workspace, setworkspace] = useState(null)
   const fetchspace = async () => {
     // let res = await fetch(`http://localhost:3000/workspace/${userId}`)
+    try{
     let res = await fetch(`${import.meta.env.VITE_API_URL}/workspace/${userId}`)
     const space = await res.json();
     setworkspace(space)
+    }catch(err){
+      console.log(err)
+      toast.error("Error while fetching workspace")
+    }
   }
   const delitem = async (Name) => {
     // let res = await fetch(`http://localhost:3000/workspace/${userId}/delcard`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body:JSON.stringify({Name:Name})})
@@ -37,11 +40,6 @@ const Workspace = () => {
   useEffect(() => {
     fetchspace();
   }, [userId,bill])
-  // useEffect(() => {
-  //   if(userId){
-  //     sendmail()
-  //   }
-  // }, [userId])
   useEffect(()=>{
     expref.current.forEach((ref,index)=>{
       const card=workspace.Cards[index];
