@@ -44,16 +44,12 @@ const upload = multer({ storage: storage })
 ///////////////////////////////////////////////user Api
 
 app.post('/datasub', async (req, res) => {
-    const { Name, Email, Contact, Passkey, Gst, Address, Btype } = req.body;
+    const { Name,Email,Passkey} = req.body;
     try {
         const user = new User({
             Name,
             Email,
-            Contact,
             Passkey,
-            Gst,
-            Address,
-            Btype
         })
         await user.save()
         res.status(200).json({ Success: "User registered" })
@@ -75,7 +71,7 @@ app.post('/Auth', async (req, res) => {
     }
 })
 
-app.get("/workspace/:userid", async (req, res) => {
+app.get("/workspace/:token/:userid", async (req, res) => {
     try {
         const { userid } = req.params;
         if (!mong.Types.ObjectId.isValid(userid)) {
@@ -86,65 +82,140 @@ app.get("/workspace/:userid", async (req, res) => {
         if (!workspace) {
             return res.status(200).json({ userid: userid, cards: "No item added in inventory" })
         }
-        const upcrd=workspace.Cards.filter(card=>new Date(card.Exp)-Date.now()>0)
-        workspace.Cards=upcrd
-        workspace.Cards.sort((cardA, cardB) => { return new Date(cardA.Exp) - new Date(cardB.Exp) })
+        if(workspace.PCards.length>1){
+        const upcrd=workspace.PCards.filter(card=>new Date(card.Exp)-Date.now()>0)
+        workspace.PCards=upcrd
+        workspace.PCards.sort((cardA,cardB) => { return new Date(cardA.Exp) - new Date(cardB.Exp)})
+        }
+        if(workspace.NPCards.length>1){
+            const upcrd=workspace.NPCards.filter(card=>card.Amount>0)
+            workspace.NPCards=upcrd
+            workspace.NPCards.sort((cardA,cardB)=>{return cardA.Amount-cardB.Amount})
+        }
         return res.status(200).json(workspace)
     } catch (err) {
         console.log(err)
         return res.status(500).json({ error: "System error" })
     }
 })
-app.post("/workspace/:userid/addcard", upload.single("snap"), async (req, res) => {
+app.post("/workspace/:token/:userid/addcard", upload.single("snap"), async (req, res) => {
     try {
         const { userid } = req.params;
         const objid = new mong.Types.ObjectId(userid)
-        const Name = req.body.Name;
-        const Amount = req.body.Amount;
-        const Exp = req.body.Exp;
-        const Price=req.body.Price
+        const data=req.body
         const Timestmp = req.body.Timestmp || new Date().toLocaleDateString([], { day: '2-digit', month: '2-digit', year: 'numeric', hour: "2-digit", minute: "2-digit" });
         let workspace = await Workspace.findOne({ Userid: objid })
         if (!workspace) {
             workspace = new Workspace({ Userid: objid, Cards: [] })
         }
-        const snap_path = req.file ? req.file.filename : "deficon.jpg"
-        workspace.Cards.push({ Name, Amount, Exp, Price, Timestmp, snap: snap_path })
+        if(data.Itemtype==='Perishables'){
+            const Name = req.body.Name;
+            const Amount = req.body.Amount;
+            const Itemtype=req.body.Itemtype
+            const Exp = req.body.Exp;
+            const Price=req.body.Price
+            const snap_path = req.file ? req.file.filename : "deficon.jpg"
+            const Itemid=req.body.Itemid
+        workspace.PCards.push({ Name, Amount, Itemtype, Exp, Price, Timestmp, snap: snap_path,Itemid:Itemid})
         await workspace.save();
+        }
+        else{
+            const Name = req.body.Name;
+            const Amount = req.body.Amount;
+            const Itemtype=req.body.Itemtype;
+            const Price=req.body.Price;
+            const snap_path = req.file ? req.file.filename : "deficon.jpg"
+            const Itemid=req.body.Itemid;
+            workspace.NPCards.push({ Name, Amount, Itemtype, Price, Timestmp, snap: snap_path,Itemid:Itemid})
+            await workspace.save();
+        }
         return res.status(200).json({ Userid: userid, wrk: workspace })
     }
     catch (err) {
         return res.status(400).json({ error: "Some error occured" })
     }
 })
-app.post("/Workspace/:userid/delcard", async (req, res) => {
+app.post("/Workspace/:token/:userid/delcard", async (req, res) => {
     const { userid } = req.params
     const objid = new mong.Types.ObjectId(userid)
-    const { Name } = req.body;
+    const { Itemid,Itemtype } = req.body;
     let workspace = await Workspace.findOne({ Userid: objid })
     if (!workspace) {
         return res.status(400).json({ err: "User error in accessing workspace" })
     }
-    const imgcrd=workspace.Cards.filter(card=>card.Name==Name)
-    imgcrd.forEach((card)=>{
-        const img=path.join(__dirname,"uploads",card.snap)
-        if(fs.existsSync(img)){
-            try{
-                fs.unlinkSync(img)
-                console.log("deleted")
+    if(Itemtype==='Perishables'){
+        const imgcrd=workspace.PCards.filter(card=>card.Itemid==Itemid)
+        imgcrd.forEach((card)=>{
+            const img=path.join(__dirname,"uploads",card.snap)
+            if(fs.existsSync(img)){
+                try{
+                    fs.unlinkSync(img)
+                    console.log("deleted")
+                }
+                catch(err){
+                    console.log("Error:"+err)
+                }
             }
-            catch(err){
-                console.log("Error:"+err)
-            }
+        })
+        const updatedcrd = workspace.PCards.filter(card => card.Itemid !== Itemid)
+        if (workspace.PCards.length === updatedcrd.length) {
+            return res.status(500).json({ err: "Item not found" })
         }
-    })
-    const updatedcrd = workspace.Cards.filter(card => card.Name !== Name)
-    if (workspace.Cards.length === updatedcrd.length) {
-        return res.status(500).json({ err: "Item not found" })
+        workspace.PCards = updatedcrd;
+        await workspace.save();
+    }else{
+        const imgcrd=workspace.NPCards.filter(card=>card.Itemid==Itemid)
+        imgcrd.forEach((card)=>{
+            const img=path.join(__dirname,"uploads",card.snap)
+            if(fs.existsSync(img)){
+                try{
+                    fs.unlinkSync(img)
+                    console.log("deleted")
+                }
+                catch(err){
+                    console.log("Error:"+err)
+                }
+            }
+        })
+        const updatedcrd = workspace.NPCards.filter(card => card.Itemid !== Itemid)
+        if (workspace.NPCards.length === updatedcrd.length) {
+            return res.status(500).json({ err: "Item not found" })
+        }
+        workspace.NPCards = updatedcrd;
+        await workspace.save();
     }
-    workspace.Cards = updatedcrd;
-    await workspace.save();
     return res.status(200).json({ success: "Card deleted successfully, refresh the page" })
+})
+app.post('/Workspace/:token/:userid/updatecard',async(req,res)=>{
+    const { userid } = req.params
+    const objid = new mong.Types.ObjectId(userid)
+    let workspace = await Workspace.findOne({ Userid: objid })
+    const {Amount,Itemid,Itemtype}=req.body
+    if(Itemtype==='Perishables'){
+        const crd=workspace.PCards.find(card=>card.Itemid===Itemid)
+        if(!crd){
+            return res.status(400).json({err:"Unable to find card"})
+        }
+        crd.Amount=Amount
+        await workspace.save()
+        const ncrd=workspace.PCards.find(card=>card.Itemid===Itemid)
+        if(ncrd.Amount!=Amount){
+            return res.status(500).json({err:"Unable to update card"})
+        }
+        res.status(200).json({success:"Card updated succcessfully"})
+    }else{
+        const crd=workspace.NPCards.find(card=>card.Itemid===Itemid)
+        if(!crd){
+            return res.status(400).json({err:"Unable to find card"})
+        }
+        crd.Amount=Amount
+        await workspace.save()
+        const ncrd=workspace.NPCards.find(card=>card.Itemid===Itemid)
+        if(ncrd.Amount!=Amount){
+            return res.status(500).json({err:"Unable to update card"})
+        }
+        res.status(200).json({success:"Card updated succcessfully"})
+    }
 })
 app.listen(port, (req, res) => {
     console.log(`app listening on ${port}`)

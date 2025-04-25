@@ -2,18 +2,17 @@ import React from 'react'
 import { useState } from 'react'
 import './Reg.css'
 import { ToastContainer, toast,Bounce } from 'react-toastify'
-import { FormContext } from '../contexts/Form'
-import { useContext } from 'react'
 import {useNavigate} from 'react-router-dom'
 const Reg = () => {
-  const [form,setform] = useContext(FormContext);
-  const [err, seterr] = useState({})
+  const [form,setform] = useState({Name:'',Email:'',Passkey:''});
+  const [cpasskey,setcpasskey] = useState({Passkey:''});
+  // const [err, seterr] = useState({})
   const [emp, setemp] = useState(false)
   let navigate=useNavigate();
   const check = () => {
-    var reg=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@._])(?=.*[0-9])[a-zA-Z0-9@._]{8,}$/g
+    var reg=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@._])(?=.*[0-9])[a-zA-Z0-9@._]{6,}$/g
     const newerr = {}
-    if (form.Name.length === 0 || form.Email.length === 0 || form.Contact.length === 0 || form.Passkey.length === 0) {
+    if (form.Name.length === 0 || form.Email.length === 0 || form.Passkey.length === 0) {
       setemp(!emp)
       toast.error("All fields are required", {
         position: "top-right",
@@ -30,8 +29,12 @@ const Reg = () => {
       return newerr
     }
     if(!reg.test(form.Passkey)){
-      newerr.Passkey="The password is not compatible, it should consist of digits,upper and lower case letters along with special character @,.,_"
-      return newerr
+      newerr.Passkey="The password is not compatible, it should consist of digits,upper and lower case letters along with special character @,.,_ with length more than 6"
+      toast.error(newerr.Passkey)
+    }
+    if(form.Passkey!=cpasskey.Passkey){
+      newerr.Passkey="The confirm password doesnt matches original one"
+      toast.error(newerr.Passkey)
     }
     return newerr
   }
@@ -45,13 +48,24 @@ const Reg = () => {
     }
     seterr(prev=>({...prev,[e.target.name]:undefined}))
   }
-  const handleSubmit=()=>{
+  const confirmchange=(e)=>{
+    setcpasskey({...cpasskey,[e.target.name]:e.target.value})
+  }
+  const handleSubmit=async()=>{
     const warns=check()
     if(Object.keys(warns).length===0 && !emp){
-        toast.success("Form saved successfully",{
+        let res=await fetch(`${import.meta.env.VITE_API_URL}/datasub`,{method:"POST",body:JSON.stringify(bform),headers:{'Content-Type':'application/json'}})
+        // let res=await fetch(`http://localhost:3000/datasub`,{method:"POST",body:JSON.stringify(form),headers:{'Content-Type':'application/json'}})
+        if(res.ok){
+            toast.success("Form saved successfully",{
           theme:'light'
-        })
-        navigate("/Setup")
+          })
+          setTimeout(() => {
+            navigate('/Login')
+        }, 1000);
+        }else{
+          toast.error("unable to submit form")
+        }
     }
     else{
       seterr(warns)
@@ -78,7 +92,7 @@ const Reg = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme="dark"
         transition={Bounce}
       />
       <div className="mainc">
@@ -95,13 +109,12 @@ const Reg = () => {
             <input type='text' placeholder='Enter your Email' name='Email' id='nm1' className='blck' value={form.Email} onChange={handlechange} />
           </div>
           <div className="pck">
-            <label htmlFor='nm2' className='lb'>Contact Number</label>
-            <input type='text' placeholder='Enter your Contact number' name='Contact' id='nm2' className='blck' value={form.Contact} onChange={handlechange} />
+            <label htmlFor='nm3' className='lb'>Password</label>
+            <input type='password' placeholder='Enter the password' name='Passkey' id='nm3' className='blck' value={form.Passkey} onChange={handlechange} />
           </div>
           <div className="pck">
-            <label htmlFor='nm3' className='lb'>Password</label>
-            <input type='text' placeholder='Enter a secondary number' name='Passkey' id='nm3' className='blck' value={form.Passkey} onChange={handlechange} />
-            {err && <div className='warn'>{err.Passkey}</div>}
+            <label htmlFor='nm3' className='lb'>Confirm Password</label>
+            <input type='password' placeholder='Confirm the password' name='Passkey' id='nm3' className='blck' value={cpasskey.Passkey} onChange={confirmchange} />
           </div>
           <div className="sbn">
             <button type='submit' className='fbtn' onClick={handleSubmit}>Submit</button>

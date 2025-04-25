@@ -1,6 +1,7 @@
 .wrk{
     /* padding: 4px; */
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     flex-wrap: wrap;
     width: 100%;
@@ -11,16 +12,16 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    margin-top: 5%;
+    margin-top: 10px;
     width: 100%;
     box-sizing: border-box;
+    border: 1px solid black;
 }
 .space{
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: 21vw;
     width: 30%;
     margin: 4px;
     border: 1px solid black;
@@ -81,10 +82,10 @@
 }
 .msg{
     /* width: 50%; */
-    height: 50%;
+    height: 30%;
     padding: 3px;
     margin: auto;
-    font-size: 10vw;
+    font-size: 30px;
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);;
     background-clip: text;
     color: transparent;
@@ -97,6 +98,111 @@
  border: none;
  background-color: white;
 }
+.bills{
+    width: 80%;
+    padding: 3px;
+    margin: auto;
+    font-size: 28px;
+    color: rgb(80, 245, 80);
+    font-family: 'Poppins';
+    text-align: center;
+    border: 2px solid #1f4eae;
+    border-radius: 4px;
+    margin-top: 2%;
+}
+.upcrd{
+    width: 100%;
+    padding: 4px;
+    align-content: center;
+    margin: auto;
+    border: 2px solid black;
+    margin-top: 3vw;
+    box-sizing: border-box;
+}
+.box{
+    align-content: center;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.tle{
+    padding: 2px;
+}
+.boxvalue{
+    width: 25%;
+    padding:10px;
+    font-size: 15px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 4px;
+}
+.boxbtn{
+    padding: 4px;
+    width: 10%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 15px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.tle{
+    padding: 4px;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Poppins';
+    margin-left: 10px;
+}
+.field{
+    margin-top: 3vw;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+}
+.tcap{
+    display: inline;
+    padding: 10px;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    background-color: white;
+    width: 15%;
+    margin-left: 10px;
+    display: flex;
+    gap: 10px;
+
+}
+.capt{
+    color: black;
+    font-weight: 500;
+    font-size: 20px;
+    font-family: 'Poppins';
+    padding: 2px;
+}
+.cfield{
+    display: flex;
+    padding: 2px;
+    justify-content: space-between;
+    width: 100%;
+}
+.crds{
+    margin-top: 3vw;
+}
+.capbtn{
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 50%;
+}
+
 @media screen and (max-width:600px){
     .space{
     height: 88vw;
@@ -105,13 +211,14 @@
     }
     .tank{
         padding: 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 5%;
-    width: 100%;
-    box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 5%;
+        width: 100%;
+        box-sizing: border-box;
+        align-content: center;
     }
     .space{
         display: flex;
@@ -125,17 +232,22 @@
     border-radius: 4px;
     box-shadow: 8px 9px 9px #FBF3E8;
     }
-
-}
-.bills{
-    width: 80%;
-    padding: 3px;
-    margin: auto;
-    font-size: 28px;
-    color: rgb(80, 245, 80);
+    .boxvalue{
+        width: 45%;
+        font-size: 15px;
     font-family: 'Poppins';
-    text-align: center;
-    border: 2px solid #1f4eae;
-    border-radius: 4px;
-    margin-top: 2%;
+    font-weight: 400;
+    }
+    .boxbtn{
+        width: 25%;
+        font-size: 15px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    cursor: pointer;
+    }
+    .tcap{
+        font-size: 15px;
+        width: 75%;
+    }
+
 }

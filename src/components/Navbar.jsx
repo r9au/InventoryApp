@@ -4,16 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 const Navbar = () => {
     const {id}=useParams()
+    const {token}=useParams()
     const [task, settask] = useState(false)
     const navigate=useNavigate()
 const menu=()=>{
     settask(!task)
 }
 const Navigateadd=()=>{
-    navigate(`/Card/${id}`)
-}
-const Navigaterm=()=>{
-    navigate(`/Card/${id}`)
+    navigate(`/Card/${token}/${id}`)
 }
 const signout=()=>{
     localStorage.removeItem("User_id")

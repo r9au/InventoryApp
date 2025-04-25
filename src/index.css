@@ -71,3 +71,6 @@ button:focus-visible {
  padding: 0;
  font-family: 'Poppins';
 }
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */

@@ -126,6 +126,7 @@
         background-clip: text;
         font-weight: bold;
         color: transparent;
+        cursor: not-allowed;
     }
 }
 .brand{

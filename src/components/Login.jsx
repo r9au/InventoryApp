@@ -18,7 +18,7 @@ const Login = () => {
             toast.success("Successfully logged in",{
                 theme:'light'
             })
-            navigate(`/workspace/${resp.user_id}`)
+            navigate(`/workspace/${resp.token}/${resp.user_id}`)
         }
         else{
             toast.error("Invalid Credentials",{
@@ -38,7 +38,7 @@ const Login = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                theme="light"
+                theme="dark"
                 transition={Bounce}
             />
        <div className='container'>

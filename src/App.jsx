@@ -1,5 +1,4 @@
 import Reg from './components/Reg'
-import Setup from './components/Setup'
 import Login from './components/Login'
 import Land from './components/Land'
 import { createBrowserRouter, RouterProvider, Routes } from 'react-router-dom'
@@ -22,19 +21,15 @@ function App() {
       element: <Reg />
     },
     {
-      path: '/Setup',
-      element: <Setup />
-    },
-    {
       path:'/Reg',
       element:<Reg/>
     },
     {
-      path:'/workspace/:id',
+      path:'/workspace/:token/:id',
       element:<Protectedroute><Workspace/></Protectedroute>
     },
     {
-       path:'/Card/:id',
+       path:'/Card/:token/:id',
       element:<Card/>
     }
   ])
