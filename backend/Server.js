@@ -8,7 +8,12 @@ const path = require('path')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 require('dotenv').config()
-app.use(cors())
+app.use(cors({
+    origin: ['https://frontend-side-feaxekcyg4eng5av.southeastasia-01.azurewebsites.net'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  optionsSuccessStatus: 200,
+  credentials: true
+}))
 const port = process.env.PORT || 8000;
 app.use(exp.json())
 app.use(exp.urlencoded({ extended: true }))
