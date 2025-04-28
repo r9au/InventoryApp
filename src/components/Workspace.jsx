@@ -56,12 +56,13 @@ const Workspace = () => {
       if (days <= 4) {
         ref.style.color = "red"
         ref.style.borderColor="red"
-        setexpr(expr + 1)
+        setexpr(prev=>prev + 1)
       }
     })
     amtref.current.forEach((aref,index)=>{
       const card=workspace.NPCards[index]
-      if(card.Amount<=5){
+      const amt=parseInt(card.Amount)
+      if(amt<=5){
         aref.style.color = "red"
         aref.style.borderColor="red"
       }
@@ -154,7 +155,7 @@ const Workspace = () => {
                 <div className="name">{Card.Name}</div>
                 <div className="amt">Quantity-{Card.Amount}</div>
                 {Card.Exp && <div className="exp" ref={(el) => expref.current[index] = el}>{Card.Exp}</div>}
-                <div className="price">Price of 1 unit{Card.Price}</div>
+                <div className="price">Price of 1 unit-{Card.Price}</div>
                 <div className="stmp">{Card.Timestmp}</div>
                 <div className="cfield">
                 <button className='dstmp' onClick={() => delitem(Card.Itemid, Card.Itemtype)}><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash" /></button>

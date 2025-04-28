@@ -60,6 +60,13 @@
     font-weight: bold;
     font-family: 'Poppins';
 }
+.price{
+    margin: auto;
+    padding: 2px;
+    font-size: 100%;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
 .stmp{
     margin: auto;
     padding: 2px;
