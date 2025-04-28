@@ -22,7 +22,7 @@ const Reg = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         transition: Bounce,
       })
       newerr.Name="empty fields"
@@ -66,9 +66,6 @@ const Reg = () => {
         }else{
           toast.error("unable to submit form")
         }
-    }
-    else{
-      seterr(warns)
     }
   }
   return (
