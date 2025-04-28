@@ -15,15 +15,11 @@ const Login = () => {
             const resp= await res.json()
             localStorage.setItem("User_id",resp.user_id)
             localStorage.setItem("token",resp.token)
-            toast.success("Successfully logged in",{
-                theme:'light'
-            })
+            toast.success("Successfully logged in")
             navigate(`/workspace/${resp.token}/${resp.user_id}`)
         }
         else{
-            toast.error("Invalid Credentials",{
-                theme:"light"
-            })
+            toast.error("Invalid Credentials")
         }
     }
   return (

@@ -33,17 +33,7 @@ const Card = () => {
     const formdata = new FormData();
     const warns=check()
     if(Object.keys(warns).length!==0){
-      toast.error("Ensure all fields are complete", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      })
+      toast.error("Ensure all fields are complete")
       return;
     }
     else if(card.Itemtype==='Perishables'){
@@ -108,7 +98,7 @@ const Card = () => {
           <input className='infou' placeholder='Name of item' name='Name' onChange={handlechange} value={card.Name}></input>
         </div>
         <div className="tabu">
-          <label className='lbu'>Enter the Amount ordered</label>
+          <label className='lbu'>Enter the Quantity</label>
           <input className='infou' placeholder='Amount of item' name='Amount' onChange={handlechange} value={card.Amount} type='number'></input>
         </div>
         <div className="pcks">
@@ -124,7 +114,7 @@ const Card = () => {
           <input className='infou' placeholder='Expiry date' name='Exp' onChange={handlechange} value={card.Exp} id='exp' type='date'></input>
         </div>}
         <div className="tabu">
-          <label className='lbu' htmlFor='price'>Enter the Price(1 Qty)</label>
+          <label className='lbu' htmlFor='price'>Enter the Price of single unit</label>
           <input className='infou' placeholder='Price of 1Qty' name='Price' onChange={handlechange} value={card.Price} id='price' type='number'></input>
         </div>
         <div className="tabu">

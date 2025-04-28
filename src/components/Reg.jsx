@@ -13,17 +13,7 @@ const Reg = () => {
     const newerr = {}
     if (form.Name.length === 0 || form.Email.length === 0 || form.Passkey.length === 0) {
       setemp(!emp)
-      toast.error("All fields are required", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      })
+      toast.error("All fields are required")
       newerr.Name="empty fields"
       return newerr
     }
@@ -55,14 +45,12 @@ const Reg = () => {
         let res=await fetch(`${import.meta.env.VITE_API_URL}/datasub`,{method:"POST" ,body:JSON.stringify(form),headers:{'Content-Type':'application/json'}})
         // let res=await fetch(`http://localhost:3000/datasub`,{method:"POST",body:JSON.stringify(form),headers:{'Content-Type':'application/json'}})
         if(res.ok){
-            toast.success("Form saved successfully",{
-          theme:'light'
-          })
+            toast.success("Form saved successfully")
           setTimeout(() => {
             navigate('/Login')
         }, 1000);
         }else{
-          toast.error("unable to submit form")
+          toast.error("unable to submit form,try again later")
         }
     }
   }

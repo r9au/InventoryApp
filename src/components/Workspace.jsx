@@ -5,6 +5,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify'
 import "./Workspace.css"
 const Workspace = () => {
   const expref = useRef([])
+  const amtref=useRef([])
   const { id } = useParams()
   const {token}=useParams()
   const userId = id;
@@ -54,7 +55,15 @@ const Workspace = () => {
       const days = (new Date(card.Exp) - new Date()) / (1000 * 60 * 60 * 24)
       if (days <= 4) {
         ref.style.color = "red"
+        ref.style.borderColor="red"
         setexpr(expr + 1)
+      }
+    })
+    amtref.current.forEach((aref,index)=>{
+      const card=workspace.NPCards[index]
+      if(card.Amount<=5){
+        aref.style.color = "red"
+        aref.style.borderColor="red"
       }
     })
   }, [workspace])
@@ -143,8 +152,9 @@ const Workspace = () => {
               <div className="capn"><img src={`${import.meta.env.VITE_API_URL}/${Card.snap.startsWith("deficon.jpg") ? "public" : "uploads"}/${Card.snap}`} alt={"item image"} className='Snap'></img></div>
               <div className="details">
                 <div className="name">{Card.Name}</div>
-                <div className="amt">Amount-{Card.Amount}</div>
+                <div className="amt">Quantity-{Card.Amount}</div>
                 {Card.Exp && <div className="exp" ref={(el) => expref.current[index] = el}>{Card.Exp}</div>}
+                <div className="price">Price of 1 unit{Card.Price}</div>
                 <div className="stmp">{Card.Timestmp}</div>
                 <div className="cfield">
                 <button className='dstmp' onClick={() => delitem(Card.Itemid, Card.Itemtype)}><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash" /></button>
@@ -168,8 +178,9 @@ const Workspace = () => {
               <div className="capn"><img src={`${import.meta.env.VITE_API_URL}/${Card.snap.startsWith("deficon.jpg") ? "public" : "uploads"}/${Card.snap}`} alt={"item image"} className='Snap'></img></div>
               <div className="details">
                 <div className="name">{Card.Name}</div>
-                <div className="amt">Amount-{Card.Amount}</div>
+                <div className="amt" aref={(amt)=>amtref.current[index]=amt}>Quantity-{Card.Amount}</div>
                 {Card.Exp && <div className="exp" ref={(el) => expref.current[index] = el}>{Card.Exp}</div>}
+                <div className="price">Price of 1 unit-{Card.Price}</div>
                 <div className="stmp">{Card.Timestmp}</div>
                 <div className="cfield">
                 <button className='dstmp' onClick={() => delitem(Card.Itemid, Card.Itemtype)}><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash" /></button>
