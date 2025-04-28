@@ -46,7 +46,7 @@ const Reg = () => {
     if(emp){
       setemp(!emp)
     }
-    seterr(prev=>({...prev,[e.target.name]:undefined}))
+    // seterr(prev=>({...prev,[e.target.name]:undefined}))
   }
   const confirmchange=(e)=>{
     setcpasskey({...cpasskey,[e.target.name]:e.target.value})
@@ -54,7 +54,7 @@ const Reg = () => {
   const handleSubmit=async()=>{
     const warns=check()
     if(Object.keys(warns).length===0 && !emp){
-        let res=await fetch(`${import.meta.env.VITE_API_URL}/datasub`,{method:"POST",body:JSON.stringify(bform),headers:{'Content-Type':'application/json'}})
+        let res=await fetch(`${import.meta.env.VITE_API_URL}/datasub`,{method:"POST",body:JSON.stringify(form),headers:{'Content-Type':'application/json'}})
         // let res=await fetch(`http://localhost:3000/datasub`,{method:"POST",body:JSON.stringify(form),headers:{'Content-Type':'application/json'}})
         if(res.ok){
             toast.success("Form saved successfully",{
