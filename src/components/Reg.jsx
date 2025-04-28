@@ -6,7 +6,6 @@ import {useNavigate} from 'react-router-dom'
 const Reg = () => {
   const [form,setform] = useState({Name:'',Email:'',Passkey:''});
   const [cpasskey,setcpasskey] = useState({Passkey:''});
-  // const [err, seterr] = useState({})
   const [emp, setemp] = useState(false)
   let navigate=useNavigate();
   const check = () => {
@@ -46,7 +45,6 @@ const Reg = () => {
     if(emp){
       setemp(!emp)
     }
-    // seterr(prev=>({...prev,[e.target.name]:undefined}))
   }
   const confirmchange=(e)=>{
     setcpasskey({...cpasskey,[e.target.name]:e.target.value})
